@@ -15,13 +15,13 @@ public class SvatkySluzba {
             .addModule(new JavaTimeModule())
             .build();
     private final Path cestaKDatum = Path.of("data/svatky.json");
-    private final SeznamSvatku seznamSvatku;
+    private final SeznamSvatku seznamSvatku;// = new SeznamSvatku();
 
     public SvatkySluzba() throws IOException {
         // TODO načíst seznam svátků ze souboru svatky.json
-
+        seznamSvatku = objectMapper.readValue(cestaKDatum.toFile(), SeznamSvatku.class);
         // Následující řádek po vlastní implementaci smažete.
-        seznamSvatku = null;
+        //seznamSvatku = null;
     }
 
     public List<String> vyhledatSvatkyDnes() {
@@ -31,12 +31,18 @@ public class SvatkySluzba {
     public List<String> vyhledatSvatkyKeDni(MonthDay day) {
         // TODO
         // získat seznam svátků
+        List<String> listStringu = seznamSvatku.getSvatky()
+                .stream()
+                .filter(svatek -> svatek.getDen().equals(day))
+                .map(Svatek::getJmeno)
+                .toList();
         // převést na Stream
-        // pomocí metody filter() vybrat jen ty, které odpovídají zadanému dni (porovnat MonthDay pomocí metodyequals())
+        // pomocí metody filter() vybra)t jen ty, které odpovídají zadanému dni (porovnat MonthDay pomocí metodyequals())
         // pomocí metody map() získat z objektu jméno
         // pomocí toList() převést na List
-
         // Následující řádek po vlastní implementaci smažete.
-        return List.of();
+         //return List.of();
+        return listStringu;
     }
+
 }
